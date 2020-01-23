@@ -35,3 +35,7 @@ params:
         sup: {2: 2}
         sig: {2: 1}
       tr_spaces: {}
+
+model_params:
+  view_name: ''
+  delay: 5
