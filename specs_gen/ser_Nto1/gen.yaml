@@ -1,0 +1,45 @@
+dut_class: xbase.layout.mos.top.GenericWrapper
+impl_lib: AAA_SER
+impl_cell: AA_SER
+root_dir: gen_outputs/ser_Nto1
+
+params:
+  cls_name: bag3_digital.layout.serdes.serNto1.SerNto1
+  params:
+    seg_dict:
+      ff: 2
+      inv_clk: 8
+      inv_en: 2
+      inv_rst: 2
+      tinv: 4
+    ratio: 12
+    export_nets: True
+    tap_sep_flop: 4  # number of flops separating each column tap
+
+    pinfo:
+      lch: 30
+      top_layer: 4
+      row_specs:
+        - mos_type: nch
+          width: 84
+          threshold: standard
+          bot_wires:
+            data: ['sup', 'sig<0:1>']
+            shared: ['sup']
+          top_wires: ['sig<0:1>']
+          flip: True
+        - mos_type: pch
+          width: 110
+          threshold: standard
+          bot_wires: ['sig<0:2>']
+          top_wires:
+            data: ['sig<0:1>', 'sup']
+            shared: ['sup']
+      tr_widths:
+        sup: {2: 2, 3: 2, 4: 2}
+        sig: {2: 1, 3: 2, 4: 2}
+        clk: {2: 2, 3: 2, 4: 4}
+      tr_spaces:
+        !!python/tuple ['sup', '']: {2: 1, 3: 1, 4: 1}
+        !!python/tuple ['clk', '']: {2: 1, 3: 1, 4: 1}
+        !!python/tuple ['sig', '']: {2: 0, 3: 0, 4: 1}

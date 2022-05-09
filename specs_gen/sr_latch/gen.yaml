@@ -1,0 +1,52 @@
+impl_lib: AAA_SR_LATCH_SYMMETRIC
+impl_cell: AA_SR_LATCH_SYMMETRIC
+root_dir: gen_outputs/sr_latch_symmetric
+
+lay_class: bag3_digital.layout.stdcells.util.STDCellWrapper
+
+sr_params: &sr_params
+    pinfo:
+      tiles:
+        - name: sr
+      tile_specs:
+        arr_info:
+          lch: 30
+          top_layer: 5
+          tr_widths: {}
+            #sup: {2: 2, 3: 2, 4: 2, 5: 2}
+          tr_spaces:
+            !!python/tuple ['sig_hs', '']: {3: 1, 4: 1}
+
+        place_info:
+          sr:
+            row_specs:
+              - mos_type: nch
+                width: 84
+                threshold: lvt
+                bot_wires:
+                  data: [sup, 'sig<0:1>']
+                  shared: [sup]
+                top_wires: ['sig<0>', 'sig_hs<0:1>', 'sig<1>']
+                flip: True
+              - mos_type: pch
+                width: 110
+                threshold: lvt
+                bot_wires: ['sig<0:1>']
+                top_wires:
+                  data: ['sig<0:1>', sup]
+                  shared: [sup]
+        abut_list: []
+    seg_dict:
+        fb: 1
+        ps: 2
+        nr: 2
+        ibuf: 2
+        obuf: 2
+        rst: 2
+    has_outbuf: True
+    has_rstlb: True
+
+params:
+  cls_name: bag3_digital.layout.sampler.sr_latch.SRLatchSymmetric
+  params:
+    <<: *sr_params

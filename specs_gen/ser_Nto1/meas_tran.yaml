@@ -1,0 +1,35 @@
+gen_specs_file: data/bag3_digital/specs_gen/ser_Nto1/gen.yaml
+meas_class: bag3_digital.measurement.serdes.ser_Nto1.SerNto1Meas
+meas_rel_dir: meas
+meas_name: ser_Nto1_tran
+
+meas_params:
+#  sim_envs: ['tt_25', 'ss_m40', 'ff_125']
+  sim_envs: ['tt_25']
+  tbm_specs:
+    sim_params:
+      t_rst: 0.0
+      t_rst_rf: 0.0
+      t_pw: 900.0e-12
+      t_per: 1000.0e-12
+      t_rf: 10.0e-12
+      t_sim: 25.0e-9
+      c_load: 10.0e-15
+    sim_options:
+      cmi_opts: [1, 0]
+    tran_options:
+      errpreset: conservative
+      skipdc: yes
+    pwr_domain:
+      clk: [ VSS, VDD ]
+      clk_div: [ VSS, VDD ]
+      din: [ VSS, VDD ]
+      doutb: [ VSS, VDD ]
+      rst: [ VSS, VDD ]
+    sup_values:
+      VDD: {'tt_25': 1.8, 'ss_m40': 1.8, 'ff_125': 1.8}
+      VSS: 0.0
+  ser_ratio: 12
+  out_pin: doutb
+  clkb_pin: False
+  save_outputs: ['p<11:0>', 'clk_buf', 'p0_buf', 'rst_sync', 'clkb_buf', 'd<11:0>']

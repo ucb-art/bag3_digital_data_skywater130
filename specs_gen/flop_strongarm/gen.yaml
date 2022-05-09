@@ -1,0 +1,114 @@
+impl_lib: AAA_FLOP_STRONGARM
+impl_cell: AA_FLOP_STRONGARM
+root_dir: gen_outputs/flop_strongarm
+
+lay_class: bag3_digital.layout.stdcells.util.STDCellWrapper
+
+flop_params: &flop_params
+    pinfo:
+      tiles:
+        - name: strongarm
+        - name: sr
+          flip: True
+      tile_specs:
+        arr_info:
+          lch: 30
+          top_layer: 5
+          tr_widths: 
+            sup: {2: 2, 3: 2, 4: 2, 5: 2}
+          tr_spaces:
+            !!python/tuple ['sig_hs', '']: {3: 1, 4: 1}
+
+        place_info:
+          sr:
+            row_specs:
+              - mos_type: nch
+                width: 84
+                threshold: lvt
+                bot_wires:
+                  data: [sup, 'sig<0:1>']
+                  shared: [sup]
+                top_wires: ['sig<0>', 'sig_hs<0:1>', 'sig<1>']
+                flip: True
+              - mos_type: pch
+                width: 110
+                threshold: lvt
+                bot_wires: ['sig<0:1>']
+                top_wires:
+                  data: ['sig<0:1>', sup]
+                  shared: [sup]
+          strongarm:
+            bot_mirror: False
+            top_mirror: False
+            row_specs:
+              - mos_type: nch
+                width: 84
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: ['sup', 'tail']
+                    - wires: ['sup', 'sig']
+                  shared: [sup]
+                top_wires:
+                  data:
+                    - wires: ['sig<0:1>']
+                flip: True
+              - mos_type: nch
+                width: 110
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: ['sig']
+                top_wires:
+                  data:
+                    - wires: [['sig<0:2>', G_MATCH]]
+                flip: True
+              - mos_type: nch
+                width: 84
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: ['sig']
+                top_wires:
+                  data:
+                    - wires: ['sig<0:1>', ['sig<2>', DS_MATCH]]
+              - mos_type: pch
+                width: 110
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: [['sig<0>', DS_MATCH], 'sig<1:2>']
+                top_wires:
+                  data:
+                    - wires: ['sig<0:1>', 'sup']
+                  shared: [sup]
+                flip: True
+
+        abut_list:
+          - edges: [[sr, 1], [strongarm, 1]]
+            shared1: [sup]
+            shared2: [sup]
+
+    sa_params:
+      seg_dict:
+        in: 2
+        nfb: 4
+        pfb: 4
+        tail: 4
+        sw: 1
+      has_bridge: True
+    sr_params:
+      seg_dict:
+        fb: 1
+        ps: 2
+        nr: 2
+        ibuf: 2
+        obuf: 2
+        rst: 2
+      has_outbuf: True
+    has_rstlb: True
+
+params:
+  cls_name: bag3_digital.layout.sampler.flop_strongarm.FlopStrongArm
+  params:
+    <<: *flop_params

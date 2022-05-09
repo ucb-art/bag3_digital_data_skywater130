@@ -1,0 +1,82 @@
+impl_lib: AAA_STRONGARM
+impl_cell: AA_STRONGARM
+root_dir: gen_outputs/strongarm
+
+lay_class: bag3_digital.layout.stdcells.util.STDCellWrapper
+
+sa_params: &sa_params
+    pinfo:
+      tiles:
+        - name: strongarm
+      tile_specs:
+        arr_info:
+          lch: 30
+          top_layer: 5
+          tr_widths: 
+            sup: {2: 2, 3: 2, 4: 2, 5: 2}
+          tr_spaces:
+            !!python/tuple ['sig_hs', '']: {3: 1, 4: 1}
+
+        place_info:
+          strongarm:
+            bot_mirror: False
+            top_mirror: False
+            row_specs:
+              - mos_type: nch
+                width: 84
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: ['sup', 'tail']
+                    - wires: ['sup', 'sig']
+                  shared: [sup]
+                top_wires:
+                  data:
+                    - wires: ['sig<0:1>']
+                flip: True
+              - mos_type: nch
+                width: 110
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: ['sig']
+                top_wires:
+                  data:
+                    - wires: [['sig<0:2>', G_MATCH]]
+                flip: True
+              - mos_type: nch
+                width: 84
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: ['sig']
+                top_wires:
+                  data:
+                    - wires: ['sig<0:1>', ['sig<2>', DS_MATCH]]
+              - mos_type: pch
+                width: 110
+                threshold: lvt
+                bot_wires:
+                  data:
+                    - wires: [['sig<0>', DS_MATCH], 'sig<1:2>']
+                top_wires:
+                  data:
+                    - wires: ['sig<0:1>', 'sup']
+                  shared: [sup]
+                flip: True
+
+        abut_list: [] 
+
+    seg_dict:
+      in: 2
+      nfb: 4
+      pfb: 4
+      tail: 4
+      sw: 1
+    has_bridge: True
+    has_rstb: True
+
+params:
+  cls_name: bag3_digital.layout.sampler.strongarm.SAFrontend
+  params:
+    <<: *sa_params

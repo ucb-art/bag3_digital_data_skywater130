@@ -1,0 +1,52 @@
+gen_specs_file: data/bag3_digital/specs_gen/flop/gen.yaml
+
+tbm_class: bag3_testbenches.measurement.tran.digital.DigitalTranTB
+tbm_specs:
+  sim_envs: ['tt_25']
+  sim_params:
+    t_rst: 0.0
+    t_rst_rf: 0.0
+    t_per: 1000.0e-12
+    t_rf: 100.0e-12
+    t_sim: 4.0e-9
+    t_delay: 5.6e-12
+    c_load: 10.0e-15
+  sim_options:
+    cmi_opts: [1, 0]
+  tran_options:
+    errpreset: conservative
+  pwr_domain:
+    in: [VSS, VDD]
+    clk: [VSS, VDD]
+    clkb: [VSS, VDD]
+    out: [VSS, VDD]
+  sup_values:
+    #VDD: {'tt_25': 1.0, 'ss_m40': 1.0, 'ff_125': 1.0}
+    VDD: {'tt_25': 1.8}
+    VSS: 0.0
+  dut_pins: [clkb, clk, in, out, VDD, VSS]
+  save_outputs: [clkb, clk, in, out]
+  pulse_list:
+    - pin: in
+      tper: 2*t_per
+      tpw: t_per
+      trf: t_rf
+      td: t_delay/2+t_per/2
+  load_list:
+    - pin: clk
+      type: vsin
+      value:
+        vo: v_VDD/2
+        va: v_VDD/2
+        freq: 1/t_per
+        td: t_delay
+    - pin: clkb
+      type: vsin
+      value:
+        vo: v_VDD/2
+        va: v_VDD/2
+        freq: 1/t_per
+        sinephase: 180
+    - pin: out
+      type: cap
+      value: c_load
