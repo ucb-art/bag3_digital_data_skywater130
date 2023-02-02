@@ -19,7 +19,7 @@ params:
           width: 84
           threshold: standard
           bot_wires:
-            data: ['sup', 'sig']
+            data: ['sup', 'sig<0:1>']
             shared: ['sup']
           top_wires: ['sig']
           flip: True
@@ -28,11 +28,11 @@ params:
           threshold: standard
           bot_wires: ['sig']
           top_wires:
-            data: ['sig', 'sup']
+            data: ['sig<0:1>', 'sup']
             shared: ['sup']
       tr_widths:
-        sup: {2: 2, 3: 2, 4: 2}
-        sig: {2: 2, 3: 2, 4: 2}
+        sup: {1: 2, 2: 2, 3: 2}
+        sig: {1: 2, 2: 2, 3: 2}
       tr_spaces:
-        !!python/tuple [sup, '']: {2: 1, 3: 1, 4: 1}
-        !!python/tuple [sig, '']: {2: 0, 3: 0, 4: 0}
+        !!python/tuple [sup, '']: {1: 1, 2: 1, 3: 1}
+        !!python/tuple [sig, '']: {1: 0, 2: 0, 3: 0}
