@@ -1,0 +1,28 @@
+dsn_class: bag3_digital.design.stdcells.inv.beta.InverterBetaDesigner
+root_dir: gen_outputs/inv/dsn
+impl_lib: AAA_DSN_INV
+
+dsn_params:
+  gen_specs: data/bag3_digital/specs_blk/inv/gen_sch.yaml
+  seg_n: 8
+
+  meas_params:
+    sim_envs: [tt_25, ss_25, ff_25]
+    tbm_specs:
+      sim_params:
+        t_rst: 0.0
+        t_rst_rf: 0.0
+        t_per: 1.0e-9
+        t_rf: 10.0e-12
+        c_load: 20.0e-15
+      sim_options: {}
+      tran_options:
+        errpreset: conservative
+      pwr_domain:
+        in: [VSS, VDD]
+        out: [VSS, VDD]
+      sup_values:
+        VDD: {tt_25: 1.0, ss_25: 0.9, ff_25: 1.1}
+        VSS: 0.0
+      swp_info:
+      - ['c_load', {type: LINEAR, start: 1e-15, stop: 5e-15, num: 3}]

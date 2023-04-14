@@ -1,0 +1,13 @@
+dut_class: bag3_digital.schematic.inv.bag3_digital__inv
+impl_lib: AAA_INV
+impl_cell: AA_inv
+root_dir: gen_outputs/inv
+
+params:
+  lch: 30
+  w_p: 110
+  w_n: 84
+  th_p: standard
+  th_n: standard
+  seg_p: 4
+  seg_n: 4
